@@ -10,7 +10,7 @@ RUN python3 setup.py install
 
 ADD requirements.txt /requirements.txt
 ADD app /app
-
+WORKDIR /app
 RUN pip install -r /requirements.txt
 
 WORKDIR /
