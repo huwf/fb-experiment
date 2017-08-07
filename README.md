@@ -17,8 +17,5 @@ This has the application running in detached mode. Try `run -it --rm` if you wan
 
 It is probably possible to run on the metal with just Python, or on a different port but I haven't got it to work yet.
 
-## Data
-
-I'm planning to use MySQL/MariaDB, although hopefully SQLAlchemy should abstract that detail.
 
 
