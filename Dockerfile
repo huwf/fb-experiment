@@ -13,6 +13,5 @@ ADD app /app
 
 RUN pip install -r /requirements.txt
 
-ADD wait-for-it.sh /usr/bin/wait-for-it
-
 WORKDIR /
+ADD wait-for-it.sh ./wait-for-it
