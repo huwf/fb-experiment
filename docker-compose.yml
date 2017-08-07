@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql:8.0.2
+    environment:
+     - MYSQL_ROOT_PASSWORD=sdf893dsfljs
+     - MYSQL_DATABASE=fbexperiment
+     - MYSQL_USER=fbuser
+     - MYSQL_PASSWORD=fbuser
+    container_name: mysql
+
+  app:
+    container_name: app
+    depends_on:
+      - "mysql"
+    image: huwf/fb-flask-app
+    volumes:
+     - ./app:/app
+     - ./requirements.txt:/requirements.txt
+    ports:
+      - 80:80
+    volumes:
+      - database_data:/var/lib/mysql
+    command: ["wait-for-it", "mysql:3306", "/usr/bin/supervisord"]
+
+
+volumes:
+  database_data:
+
