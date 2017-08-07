@@ -21,7 +21,7 @@ services:
       - 80:80
     volumes:
       - database_data:/var/lib/mysql
-    command: ["wait-for-it", "mysql:3306", "/usr/bin/supervisord"]
+    command: ["./wait-for-it", "mysql:3306", "/usr/bin/supervisord"]
 
 
 volumes:
