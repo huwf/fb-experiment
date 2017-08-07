@@ -1,6 +1,7 @@
 # FB Application
 
 To run using Docker on port 80:
+
 	git clone https://github.com/huwf/fb-experiment.git
 	cd fb-application
 	docker build -t flask-app .
