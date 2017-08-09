@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
@@ -9,6 +9,11 @@ def index():
 @app.route("/ping/<hash>")
 def ping():
     pass
+
+
+@app.route("/participant_information")
+def participant_information():
+    return render_template('participant_information.html')
 
 
 if __name__ == "__main__":
