@@ -1,11 +1,16 @@
-import time 
+import time
+from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 #This requires the Firefox driver (https://github.com/mozilla/geckodriver/releases) be installed to /usr/bin
 def validate_account(email, password):
+    MIN_TIME = timedelta(365)
     MIN_FRIENDS = 25
+
 
     driver = webdriver.Firefox()
     driver.get("http://www.facebook.com")
@@ -28,11 +33,26 @@ def validate_account(email, password):
 
     #Check for "validness" of profile here:
     driver.find_element_by_xpath("//div[@data-click='profile_icon']").click()
-
+    time.sleep(5)
     elem = driver.find_element_by_name("profile_id")
     profile_id = elem.get_attribute('value')
 
     #Account age check
+    #Bit of a hack - check their earliest profile pic
+    driver.find_element_by_xpath("//img[@class='profilePic img']").click()
+    time.sleep(5)
+    elem = driver.find_element_by_xpath("//img[@class='spotlight']")
+    elem.send_keys(Keys.ARROW_LEFT)
+    time.sleep(5)
+    elem = driver.find_element_by_xpath("//span[@id='fbPhotoSnowliftTimestamp']/a/abbr/span[@class='timestampContent']")
+
+    created_date = datetime.strptime(elem.text, "%d %B %Y")
+
+    if datetime.now() - created_date < MIN_TIME:
+        driver.close()
+        return False
+
+    elem.send_keys(Keys.ESCAPE)
 
     #Friends check
     elem = driver.find_element_by_xpath("//a[@data-tab-key='friends']").find_element_by_tag_name("span")
@@ -46,3 +66,4 @@ def validate_account(email, password):
 
 
     driver.close()
+    return True
