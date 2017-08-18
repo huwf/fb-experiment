@@ -37,6 +37,7 @@ def validate_account(email, password):
     #Friends check
     elem = driver.find_element_by_xpath("//a[@data-tab-key='friends']").find_element_by_tag_name("span")
     if int(elem.text) < MIN_FRIENDS:
+        driver.close()
         return False
 
     #Picture check
