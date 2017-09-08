@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from validator import validate_account
+from .sql import *
 app = Flask(__name__)
 
 
@@ -10,6 +11,10 @@ def index():
 @app.route("/ping/<hash>")
 def ping():
     pass
+
+@app.route("/submitted", method="POST")
+def submitted():
+    data = request.data
 
 
 @app.route("/participant_information")
