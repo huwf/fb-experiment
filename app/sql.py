@@ -116,7 +116,7 @@ def populate_rockyou(db_url):
     db = scoped_session(sessionmaker(autoflush=True, bind=engine))
     Base.metadata.create_all(bind=engine)
     import os
-    with open(os.path.join(os.getcwd(), 'rockyou.txt'), encoding='latin-1') as f:
+    with open(os.path.join(os.getcwd(), 'rockyou.txt.full'), encoding='latin-1') as f:
         i = 1
         for pw in f.readlines():
             sha_pw = hashlib.sha256(bytes(pw, encoding='latin-1')).hexdigest()
