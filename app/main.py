@@ -21,6 +21,9 @@ def submitted():
 def participant_information():
     return render_template('participant_information.html')
 
+@app.route("/fb-app")
+def facebook():
+    render_template('fb-test.html')
 
 #@app.route("/validate")
 #def validate():
