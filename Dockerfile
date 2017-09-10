@@ -11,6 +11,6 @@ RUN python3 setup.py install
 ADD requirements.txt /requirements.txt
 
 WORKDIR /app
-RUN pip install -r /requirements.txt
+RUN python3 -m pip install -r /requirements.txt
 
 ADD wait-for-it.sh /wait-for-it

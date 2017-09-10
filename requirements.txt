@@ -1,2 +1,3 @@
 SQLAlchemy>=1.1.13
 requests>=2.18
+selenium==3.5.0

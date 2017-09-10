@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
-from validator import validate_account
-from .sql import *
+# from validator import validate_account
+try:
+    from .sql import *
+except SystemError:
+    from sql import *
 app = Flask(__name__)
 
 
@@ -12,7 +15,7 @@ def index():
 def ping():
     pass
 
-@app.route("/submitted", method="POST")
+@app.route("/submitted", methods=["POST"])
 def submitted():
     data = request.data
 
@@ -23,7 +26,7 @@ def participant_information():
 
 @app.route("/fb-app")
 def facebook():
-    render_template('fb-test.html')
+    return render_template('fb-test.html')
 
 #@app.route("/validate")
 #def validate():

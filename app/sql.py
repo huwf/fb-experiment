@@ -71,8 +71,25 @@ class PasswordAnalysis(Base):
     def is_same_as_email(self, email, password):
         return email == password
 
+    def is_leet_speak(self, password, db_url):
+        """
+        Returns true if using common letter/number substitutions get it on PopularPassword list
+        :param password: 
+        :return: 
+        """
+        engine = create_engine(db_url)
+        db = scoped_session(sessionmaker(autoflush=True, bind=engine))
+        Base.metadata.create_all(bind=engine)
+        password = password.lower()
+        password = password.replace('0', 'o').replace('3', 'e').\
+            replace('7', 'l').replace('!', 'i').replace('a', '@')
+
+        popular_passwords = db.query(PopularPasswords)\
+            .filter(PopularPasswords.hash == hashlib.sha256(bytes(password, encoding='latin-1'))).one()
+        return popular_passwords.rank
+
     def is_pwned(self, password):
-        sha1_pw = hashlib.sha1(bytes(password, encoding='utf-8')).hexdigest()
+        sha1_pw = hashlib.sha1(bytes(password, encoding='latin-1')).hexdigest()
         resp = requests.post('https://haveibeenpwned.com/api/v2',
                              headers={'Content-type': 'application/x-www-form-urlencoded'},
                              data={'Password': sha1_pw})

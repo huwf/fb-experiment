@@ -34,7 +34,7 @@ def validate_account(email, password):
         pass
 
     except Exception as e:
-        print e
+        print(e)
         driver.close()
         return False
 

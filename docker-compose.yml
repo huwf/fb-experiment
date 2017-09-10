@@ -8,6 +8,8 @@ services:
      - MYSQL_USER=fbuser
      - MYSQL_PASSWORD=fbuser
     container_name: mysql
+    volumes:
+      - database_data:/var/lib/mysql
 
   app:
     container_name: app
@@ -19,8 +21,7 @@ services:
      - ./requirements.txt:/requirements.txt
     ports:
       - 80:80
-    volumes:
-      - database_data:/var/lib/mysql
+
     command: ["/wait-for-it", "mysql:3306", "--", "/usr/bin/supervisord"]
 
 
